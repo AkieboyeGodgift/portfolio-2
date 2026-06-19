@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
+/* Minimal Stark Theme Configurations */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: #000000; /* True pitch black for premium contrast */
+  color: #ffffff; /* Stark white */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+/* Tailwind v4 Custom Utility 
+  This cleanly strips scrollbars for our cinematic horizontal slider without breaks
+*/
+@utility no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
+
+/* Global Premium Minimal Scrollbar for the page */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #18181b; /* Subtle dark zinc 800 */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #27272a; /* Zinc 700 on interaction */
+}
+
+/* Stripped out the color glow background.
+  Replacing with a high-end, pure white micro-vignette to add depth without using color.
+*/
+.glow-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1400px;
+  height: 500px;
+  background: radial-gradient(circle at 50% -200px, rgba(255, 255, 255, 0.03) 0%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
 }
