@@ -38,7 +38,7 @@ export const experiences = [
   {
     company: "AGM Techpluse",
     role: "Software Engineering Intern",
-    period: "Present", // Update as needed
+    period: "Previous", // Update as needed
     points: [
       "Assisted in building and maintaining web applications using modern frameworks.",
       "Collaborated with cross-functional teams to deploy scalable backend services.",
