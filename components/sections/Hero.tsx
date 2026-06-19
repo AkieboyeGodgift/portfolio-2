@@ -37,14 +37,7 @@ export default function Hero() {
           animate="visible"
           className="w-full px-6 md:px-12 lg:px-16 flex flex-col items-start gap-8 sm:gap-10"
         >
-          {/* Identity Protocol Badge */}
-          <motion.div 
-            variants={fadeInUp}
-            className="inline-flex items-center gap-3 px-4 py-2 border border-zinc-900 bg-zinc-950/20 backdrop-blur-sm tracking-widest uppercase text-[10px] font-mono text-zinc-500"
-          >
-            <Terminal className="h-3.5 w-3.5 text-zinc-400" />
-            <span>Available for Roles & Core Contracts</span>
-          </motion.div>
+
 
           {/* Main Typography Header Node */}
           <div className="space-y-6 max-w-5xl">
