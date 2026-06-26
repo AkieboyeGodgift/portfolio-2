@@ -150,63 +150,71 @@ export default function Projects() {
         })}
       </motion.div>
 
-      {/* 3. HORIZONTAL VISUAL INDEX CAROUSEL */}
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full mt-24 border-t border-b border-zinc-900 bg-zinc-950/10 py-12 overflow-hidden"
-      >
-        <div className="w-full px-6 md:px-12 lg:px-16 mb-6">
-          <p className="text-[10px] font-mono tracking-widest text-zinc-600 uppercase">
-            // Selected Works Portfolio Visual Index
-          </p>
-        </div>
+    {/* 3. HORIZONTAL VISUAL INDEX CAROUSEL */}
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="w-full mt-24 p-8 border-t border-b border-zinc-900 bg-zinc-950/10 py-16 overflow-hidden"
+    >
+      <div className="w-full px-6 md:px-12 lg:px-16 mb-8">
+        <p className="text-[10px] font-mono tracking-widest text-zinc-600 uppercase">
+          // Selected Works Portfolio Visual Index
+        </p>
+      </div>
 
-        <div className="w-full overflow-x-auto no-scrollbar px-6 md:px-12 lg:px-16 py-2 flex gap-8 scroll-smooth snap-x snap-mandatory relative z-10">
-          {projects.map((project, idx) => {
-            const lookupKey = (project.slug || project.title || "").toLowerCase().replace(/\s+/g, "");
-            const projectLink = projectUrlMap[lookupKey] || (project as any).link || `#projects`;
-            const projectSrc = (project as any).image || `/projects/${project.slug || lookupKey}.png`;
+      {/* Carousel Track Container */}
+      {/* Added -mx and px matching to allow flush edge-to-edge scrolling on mobile while keeping alignment */}
+      <div className="w-full overflow-x-auto no-scrollbar px-6 md:px-12 lg:px-16 py-4 flex gap-10 md:gap-12 scroll-smooth snap-x snap-mandatory relative z-10 overscroll-x-contain">
+        {projects.map((project, idx) => {
+          const lookupKey = (project.slug || project.title || "").toLowerCase().replace(/\s+/g, "");
+          const projectLink = projectUrlMap[lookupKey] || (project as any).link || `#projects`;
+          const projectSrc = (project as any).image || `/projects/${project.slug || lookupKey}.png`;
 
-            return (
-              <a 
-                href={projectLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                key={`carousel-${project.slug || idx}`}
-                className="group relative flex-shrink-0 w-[300px] sm:w-[460px] aspect-[16/10] bg-zinc-950 border border-zinc-900 overflow-hidden isolate transition-all duration-500 hover:border-zinc-700 snap-start"
-              >
-                {/* Image Frame Layer */}
-                <div className="absolute inset-0 w-full h-full grayscale group-hover:grayscale-0 contrast-[1.05] brightness-[0.6] group-hover:brightness-95 transition-all duration-700 ease-out group-hover:scale-[1.02] z-0">
-                  <Image 
-                    src={projectSrc} 
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-w-md) 300px, 460px"
-                    priority={idx < 2}
-                  />
+          return (
+            <a 
+              href={projectLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              key={`carousel-${project.slug || idx}`}
+              /* Changes made:
+                - Mobile responsive widths: scale down cleanly on ultra-small screens (w-[260px]) up to standard sizes
+                - rounded-md: Gives it a subtle, clean 6px rounded corner
+                - snap-align: Keeps snap-start smooth
+              */
+              className="group relative flex-shrink-0 w-[260px] xs:w-[320px] sm:w-[460px] aspect-[16/10] bg-zinc-950 border border-zinc-900 rounded-md overflow-hidden isolate transition-all duration-500 hover:border-zinc-700 snap-start"
+            >
+              {/* Image Frame Layer */}
+              {/* Note: The parent container's overflow-hidden & rounded-md automatically masks this child image */}
+              <div className="absolute inset-0 w-full h-full grayscale group-hover:grayscale-0 contrast-[1.05] brightness-[0.6] group-hover:brightness-95 transition-all duration-700 ease-out group-hover:scale-[1.02] z-0">
+                <Image 
+                  src={projectSrc} 
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-w-640px) 260px, 460px"
+                  priority={idx < 2}
+                />
+              </div>
+
+              {/* Information Display Hover Overlay */}
+              <div className="absolute inset-0 p-6 flex flex-col justify-between bg-gradient-to-t from-black via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <span className="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">
+                  0{idx + 1} / _index
+                </span>
+                <div className="flex items-center justify-between gap-4">
+                  <h3 className="font-heading text-base sm:text-lg font-light tracking-tight text-white">
+                    {project.title}
+                  </h3>
+                  <ArrowUpRight className="h-4 w-4 text-white shrink-0 transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300" />
                 </div>
-
-                {/* Information Display Hover Overlay */}
-                <div className="absolute inset-0 p-6 flex flex-col justify-between bg-gradient-to-t from-black via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                  <span className="text-[10px] font-mono tracking-widest text-zinc-400 uppercase">
-                    0{idx + 1} / _index
-                  </span>
-                  <div className="flex items-center justify-between gap-4">
-                    <h3 className="font-heading text-lg font-light tracking-tight text-white">
-                      {project.title}
-                    </h3>
-                    <ArrowUpRight className="h-4 w-4 text-white shrink-0 transform translate-y-1 group-hover:translate-y-0 transition-transform duration-300" />
-                  </div>
-                </div>
-              </a>
-            );
-          })}
-        </div>
-      </motion.div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </motion.div>
 
     </section>
   );
